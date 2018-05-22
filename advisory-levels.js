@@ -1,0 +1,6 @@
+var advisoryLevels = {
+    1: '1: EXERCISE NORMAL PRECAUTIONS',
+    2: '2: EXERCISE INCREASED CAUTION',
+    3: '3: RECONSIDER TRAVEL',
+    4: '4: DO NOT TRAVEL'
+};

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>US Travel Advisory Map</title>
+
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+
+    <script src="node_modules/jvectormap/jquery-jvectormap.min.js"></script>
+    <script src="node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
+    <link href="node_modules/jvectormap/jquery-jvectormap.css" rel="stylesheet"/>
+
+    <script src="advisory-levels.js"></script>
+    <script src="country-codes.js"></script>
+    <link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">US GOVERNMENT TRAVEL ADVISORY MAP</span>
+</nav>
+
+<div class="row">
+    <div id="world-map" class="col-sm-12 col-md-12 col-lg-6 col-xl-6"></div>
+    <div id="info" class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        Welcome. Select a country to view travel advice from the U.S. Department of State.
+    </div>
+</div>
+
+<script>
+    function getCode(geoPoliticalArea) {
+        var countryCount = countryCodes.length;
+        for (var i = 0; i < countryCount; i++) {
+            var countryCode = countryCodes[i];
+
+            if (countryCode.geoPoliticalArea === geoPoliticalArea) {
+                return countryCode.alpha2;
+            }
+        }
+
+        return null;
+    }
+
+    $.ajax({
+        url: 'https://travel.state.gov/_res/rss/TAsTWs.xml',
+        dataType: 'xml',
+        success: function(data) {
+            var chartData = {};
+            var parsedData = {};
+
+            var items = $(data).find('item');
+
+            var itemCount = items.length;
+            for (var i = 0; i < itemCount; i++) {
+                var item = items[i];
+
+                var geoPoliticalArea = $(item).find('dc\\:identifier').text().trim();
+
+                var code = getCode(geoPoliticalArea);
+
+                var description = $(item).find('description').text().trim();
+
+                var guide = $(item).find('guide').text().trim();
+
+                var link = $(item).find('link').text().trim();
+
+                var title = $(item).find('title').text().trim();
+
+                var level = title.substring(
+                    title.indexOf('Level') + 5,
+                    title.indexOf(':')
+                ).trim();
+
+                parsedData[code]= {
+                    alpha2:           code,
+                    description:      description,
+                    geoPoliticalArea: geoPoliticalArea,
+                    guide:            guide,
+                    level:            level,
+                    link:             link,
+                    name:             title
+                };
+
+                chartData[code] = level;
+            }
+
+            $('#world-map').vectorMap(
+                {
+                    map: 'world_mill_en',
+                    series: {
+                        regions: [
+                            {
+                                scale: {
+                                    '1': '#143871',
+                                    '2': '#F7CD76',
+                                    '3': '#F09D39',
+                                    '4': '#E93324'
+                                },
+                                attribute: 'fill',
+                                values:    chartData
+                            }
+                        ]
+                    },
+                    onRegionTipShow: function(event, label, code) {
+                        label.html(
+                            (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + ' (' + code + ')'
+                        );
+                    },
+                    onRegionClick: function(event, code) {
+                        $('#info').html(
+                            '<div class="card">' +
+                            '  <div class="card-body">' +
+                            '    <h5 class="card-title text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + ' (' + code + ')' + '</h5>' +
+                            '    <p class="card-text">' + parsedData[code].description + '</p>' +
+                            '    <a href="' + parsedData[code].link + '" target="_blank" class="btn btn-primary">MORE INFO</a>' +
+                            '  </div>' +
+                            '</div>'
+                        );
+                    }
+                }
+            );
+        },
+        error: function(data){
+            console.log('Error loading XML data');
+        }
+    });
+</script>
+</body>
+</html>

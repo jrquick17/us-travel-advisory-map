@@ -1,0 +1,13 @@
+@media (min-width: 992px) {
+    #info,
+    #world-map {
+        height: 100vh;
+    }
+}
+
+@media (max-width: 991px) {
+    #info,
+    #world-map {
+        height: 50vh;
+    }
+}
