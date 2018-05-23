@@ -41,8 +41,8 @@
         return null;
     }
 
-    $.ajax({
-        url: 'https://travel.state.gov/_res/rss/TAsTWs.xml',
+    $.get({
+        url: 'us-advisory.php',
         dataType: 'xml',
         success: function(data) {
             var chartData = {};
