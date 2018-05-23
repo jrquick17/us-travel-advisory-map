@@ -608,7 +608,7 @@ var countryCodes = [
   },
   {
     "name": "Greenland",
-    "geoPoliticalArea": "DA",
+    "geoPoliticalArea": "GL",
     "alpha2": "GL",
     "alpha3": "GRL",
     "numberic": "304"

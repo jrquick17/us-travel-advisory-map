@@ -28,7 +28,7 @@
 </div>
 
 <script>
-    function getCode(geoPoliticalArea) {
+    function getAlphaCode(geoPoliticalArea) {
         var countryCount = countryCodes.length;
         for (var i = 0; i < countryCount; i++) {
             var countryCode = countryCodes[i];
@@ -56,7 +56,7 @@
 
                 var geoPoliticalArea = $(item).find('dc\\:identifier').text().trim();
 
-                var code = getCode(geoPoliticalArea);
+                var code = getAlphaCode(geoPoliticalArea);
 
                 var description = $(item).find('description').text().trim();
 
@@ -84,6 +84,26 @@
                 chartData[code] = level;
             }
 
+            var countryCount = countryCodes.length;
+            for (var j = 0; j < countryCount; j++) {
+                var countryInfo = countryCodes[j];
+
+                code = countryInfo.alpha2;
+
+                if (typeof chartData[code] === 'undefined') {
+                    chartData[code] = '0';
+                }
+
+                if (typeof parsedData[code] === 'undefined') {
+                    parsedData[code] = {
+                        alpha2:           code,
+                        geoPoliticalArea: countryInfo.geoPoliticalArea,
+                        level:            '0',
+                        name:             countryInfo.name
+                    };
+                }
+            }
+
             $('#world-map').vectorMap(
                 {
                     map: 'world_mill_en',
@@ -91,6 +111,7 @@
                         regions: [
                             {
                                 scale: {
+                                    '0': '#DCDCDC',
                                     '1': '#143871',
                                     '2': '#F7CD76',
                                     '3': '#F09D39',
@@ -103,19 +124,22 @@
                     },
                     onRegionTipShow: function(event, label, code) {
                         label.html(
-                            (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + ' (' + code + ')'
+                            (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name)
                         );
                     },
                     onRegionClick: function(event, code) {
-                        $('#info').html(
-                            '<div class="card">' +
-                            '  <div class="card-body">' +
-                            '    <h5 class="card-title text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + ' (' + code + ')' + '</h5>' +
-                            '    <p class="card-text">' + parsedData[code].description + '</p>' +
-                            '    <a href="' + parsedData[code].link + '" target="_blank" class="btn btn-primary">MORE INFO</a>' +
-                            '  </div>' +
-                            '</div>'
-                        );
+                        var html = '';
+                        if (typeof parsedData[code].description !== 'undefined' && parsedData[code].description.length !== 0) {
+                            html = '<div class="card">' +
+                                    '  <div class="card-body">' +
+                                    '    <h5 class="card-title text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</h5>' +
+                                    '    <p class="card-text">' + parsedData[code].description + '</p>' +
+                                    '    <a href="' + parsedData[code].link + '" target="_blank" class="btn btn-primary">MORE INFO</a>' +
+                                    '  </div>' +
+                                    '</div>';
+                        }
+
+                        $('#info').html(html);
                     }
                 }
             );
