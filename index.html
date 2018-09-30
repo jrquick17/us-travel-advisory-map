@@ -140,7 +140,27 @@
 <script>
     // Request data
     var chartData = {};
+    var countryCodesData = {};
     var parsedData = {};
+
+    // Other
+    var colorScale = {
+        '0': '#DCDCDC',
+        '1': '#143871',
+        '2': '#F7CD76',
+        '3': '#F09D39',
+        '4': '#E93324'
+    };
+
+    function checkUrl() {
+        var code = window.location.hash;
+        if (code.length !== 0) {
+            code = code.replace('#', '');
+            showRegion(code);
+        } else {
+            showCountryList();
+        }
+    }
 
     function getAlphaCode(geoPoliticalArea) {
         var countryCount = countryCodes.length;
@@ -155,23 +175,75 @@
         return null;
     }
 
-    function showRegion(code) {
-        code = code.toUpperCase();
+    function showCountryList() {
+        var html = '<div class="card">' +
+                   '  <div class="card-header text-center">Countries</div>' +
+                   '  <div class="card-body">';
 
-        var html = '';
-        if (typeof parsedData[code].description !== 'undefined' && parsedData[code].description.length !== 0) {
-            html = '<div class="card">' +
-                '  <div class="card-header text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</div>' +
-                '  <div class="card-body">' +
-                '    <p class="card-text">' + parsedData[code].description + '</p>' +
-                '    <a href="' + parsedData[code].link + '" target="_blank" class="btn btn-outline-primary btn-block">MORE INFO</a>' +
-                '  </div>' +
+        var countryCodeCount = countryCodes.length;
+        for (var i = 0; i < countryCodeCount; i++) {
+            var countryCode = countryCodes[i];
+
+            var level = typeof parsedData[countryCode.alpha2] === 'undefined' ? 0 : parsedData[countryCode.alpha2].level;
+
+            var badgeColor = typeof colorScale[level] === 'undefined' ? colorScale[0] : colorScale[level];
+
+            html += '<div class="list-group">' +
+                '  <a href="#' + countryCode.alpha2 + '" ' +
+                '     data-code="' + countryCode.alpha2 + '" ' +
+                '     class="list-element list-group-item d-flex justify-content-between align-items-center">' +
+                    countryCode.name +
+                '    <span class="badge badge-pill"' +
+                '          style="color: ' + badgeColor + '">' +
+                    level +
+                '    </span>' +
+                '  </a>' +
                 '</div>';
         }
 
+        html += '</div>';
+        html += '</div>';
+
+
         $('#info').html(html);
 
-        window.location.hash = code.toLowerCase();
+        $('.list-element').click(
+            function() {
+                var code = $(this).data('code');
+
+                showRegion(code);
+            }
+        )
+    }
+
+    function showRegion(code) {
+        code = code.toUpperCase();
+
+        if (typeof parsedData[code] !== 'undefined' && typeof parsedData[code].description !== 'undefined' && parsedData[code].description.length !== 0) {
+            var html = '<a id="close-info" class="show-list-button btn btn-outline-success btn-block">SHOW COUNTRY LIST</a>';
+
+            html += '<div class="card">' +
+                '  <div class="card-header text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</div>' +
+                '  <div class="card-body">' +
+                '    <p class="card-text">' + parsedData[code].description + '</p>' +
+                '    <a href="' + parsedData[code].link + '" ' +
+                '       class="btn btn-outline-primary btn-block">MORE INFO</a>' +
+                '    <a id="close-info" class="btn btn-outline-danger btn-block">CLOSE</a>' +
+                '  </div>' +
+                '</div>';
+
+            $('#info').html(html);
+
+            window.location.hash = code.toLowerCase();
+
+            $('#close-info').click(
+                function() {
+                    showCountryList();
+                }
+            );
+        } else {
+            showCountryList();
+        }
     }
 
     $.get({
@@ -214,6 +286,8 @@
                 chartData[code] = level;
             }
 
+            countryCodesData = countryCodes;
+
             var countryCount = countryCodes.length;
             for (var j = 0; j < countryCount; j++) {
                 var countryInfo = countryCodes[j];
@@ -240,13 +314,7 @@
                     series: {
                         regions: [
                             {
-                                scale: {
-                                    '0': '#DCDCDC',
-                                    '1': '#143871',
-                                    '2': '#F7CD76',
-                                    '3': '#F09D39',
-                                    '4': '#E93324'
-                                },
+                                scale: colorScale,
                                 attribute: 'fill',
                                 values:    chartData
                             }
@@ -264,11 +332,7 @@
             );
 
             // Check URL
-            var code = window.location.hash;
-            if (code.length !== 0) {
-                code = code.replace('#', '');
-                showRegion(code);
-            }
+            checkUrl();
         },
         error: function(data){
             console.log('Error loading XML data');
