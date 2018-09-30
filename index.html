@@ -3,9 +3,10 @@
 <head>
     <title>US Travel Advisory Map</title>
 
-    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
-
     <script src="node_modules/jquery/dist/jquery.js"></script>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
 
     <script src="node_modules/jvectormap/jquery-jvectormap.min.js"></script>
     <script src="node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
@@ -16,7 +17,7 @@
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-3589546292454760",
+            google_ad_client:      "ca-pub-3589546292454760",
             enable_page_level_ads: true
         });
     </script>
@@ -27,17 +28,66 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1">US GOVERNMENT TRAVEL ADVISORY MAP</span>
+    <span class="navbar-brand text-center">
+        TRAVEL ADVISORY MAP
+    </span>
+
+    <div>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" 
+                   href="#" 
+                   id="moreDropdown" 
+                   role="button" 
+                   data-toggle="dropdown" 
+                   aria-haspopup="true" 
+                   aria-expanded="false">
+                    More
+                </a>
+                <div class="dropdown-menu"
+                     aria-labelledby="moreDropdown">
+                    <a class="dropdown-item"
+                       href="#">
+                        About
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item"
+                       href="https://www.jrquick.com">
+                        Find more cool stuff
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
 </nav>
 
-<div class="row">
-    <div id="world-map" class="col-sm-12 col-md-12 col-lg-6 col-xl-6"></div>
-    <div id="info" class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-        Welcome. Select a country to view travel advice from the U.S. Department of State.
+<div>
+    <div id="instructions-container"
+         class="row">
+         <div id="instructions"
+              class="alert alert-success alert-dismissible fade show text-center"
+              role="alert">
+            <strong>Welcome!</strong> Select a country to view travel advice from the U.S. Department of State.
+            <button id="instructions-close"
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+    </div>
+    <div class="row">
+        <div id="world-map"
+             class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+        <div id="info"
+             class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        </div>
     </div>
 </div>
 
 <script>
+    // Request data
     function getAlphaCode(geoPoliticalArea) {
         var countryCount = countryCodes.length;
         for (var i = 0; i < countryCount; i++) {
@@ -141,12 +191,12 @@
                         var html = '';
                         if (typeof parsedData[code].description !== 'undefined' && parsedData[code].description.length !== 0) {
                             html = '<div class="card">' +
-                                    '  <div class="card-body">' +
-                                    '    <h5 class="card-title text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</h5>' +
-                                    '    <p class="card-text">' + parsedData[code].description + '</p>' +
-                                    '    <a href="' + parsedData[code].link + '" target="_blank" class="btn btn-primary">MORE INFO</a>' +
-                                    '  </div>' +
-                                    '</div>';
+                                   '  <div class="card-header text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</div>' +
+                                   '  <div class="card-body">' +
+                                   '    <p class="card-text">' + parsedData[code].description + '</p>' +
+                                   '    <a href="' + parsedData[code].link + '" target="_blank" class="btn btn-outline-primary btn-block">MORE INFO</a>' +
+                                   '  </div>' +
+                                   '</div>';
                         }
 
                         $('#info').html(html);
@@ -158,6 +208,24 @@
             console.log('Error loading XML data');
         }
     });
+
+    // Instructions
+    function closeInstructions() {
+        $('#instructions').alert('close');
+    }
+
+    setTimeout(
+        function() {
+            closeInstructions();
+        },
+        20*1000
+    );
+
+    $('#instructions').click(
+        function() {
+            closeInstructions();
+        }
+    );
 </script>
 </body>
 </html>

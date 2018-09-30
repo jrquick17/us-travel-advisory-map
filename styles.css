@@ -1,13 +1,37 @@
-@media (min-width: 992px) {
+@media (min-width: 768px) {
     #info,
     #world-map {
         height: 100vh;
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
     #info,
     #world-map {
         height: 50vh;
     }
+}
+
+#instructions-container {
+    margin-left:  auto;
+    margin-right: auto;
+    position:     fixed;
+    bottom:       0;
+    left:         0;
+    width:        100%;
+    z-index:      1;
+}
+
+#instructions {
+    margin-left:  10px;
+    margin-right: 10px;
+    width:        100%;
+}
+
+#instructions-close {
+    padding-top: 9px;
+}
+
+#info .card {
+    margin: 10px;
 }
