@@ -47,7 +47,9 @@
                 <div class="dropdown-menu"
                      aria-labelledby="moreDropdown">
                     <a class="dropdown-item"
-                       href="#">
+                       href="#"
+                       data-toggle="modal" 
+                       data-target="#aboutModal">
                         About
                     </a>
                     <div class="dropdown-divider"></div>
@@ -82,6 +84,48 @@
              class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
         <div id="info"
              class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade"
+     id="aboutModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="aboutModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    id="aboutModalTitle">
+                    About
+                </h5>
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="modal" 
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>About</h5>
+                <p>
+                    This website shows a world map color coded according the the United States Department of Travel - Bureau of Consular Affairs with the intention of making it easier for travels to find safety advice and tips from a trusted source. For more information on a country just find it on the map and click it.
+                </p>
+                <h5>Contact</h5>
+                <p>
+                    If you would like to reach out to me (bug report, ideas, anything else) then shoot an email to me@jrquick.com and I will respond once I can.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-block"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 </div>
