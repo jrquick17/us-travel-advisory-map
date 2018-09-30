@@ -220,7 +220,7 @@
         code = code.toUpperCase();
 
         if (typeof parsedData[code] !== 'undefined' && typeof parsedData[code].description !== 'undefined' && parsedData[code].description.length !== 0) {
-            var html = '<a id="close-info" class="show-list-button btn btn-outline-success btn-block">SHOW COUNTRY LIST</a>';
+            var html = '<a id="show-list-button" class="btn btn-outline-success btn-block">SHOW COUNTRY LIST</a>';
 
             html += '<div class="card">' +
                 '  <div class="card-header text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</div>' +
@@ -237,6 +237,12 @@
             window.location.hash = code.toLowerCase();
 
             $('#close-info').click(
+                function() {
+                    showCountryList();
+                }
+            );
+
+            $('#show-list-button').click(
                 function() {
                     showCountryList();
                 }
