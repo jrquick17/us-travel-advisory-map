@@ -1,5 +1,7 @@
 # us-travel-advisory-map
 
+![](example.png)
+
 # About
 A map of the world with each country color coded based on the US Department of State - Bureau of Consular Affairs perceived threat levels.
 
