@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>US Travel Advisory Map</title>
+  <title>US Travel Advisory Map</title>
 
-    <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"></script>
 
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+          integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+          crossorigin="anonymous"></script>
 
-    <script src="node_modules/jvectormap/jquery-jvectormap.min.js"></script>
-    <script src="node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
-    <link href="node_modules/jvectormap/jquery-jvectormap.css" rel="stylesheet"/>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+        crossorigin="anonymous">
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126703154-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-126703154-1');
-    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.css" rel="stylesheet"/>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126703154-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-126703154-1');
+  </script>
 
 
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client:      "ca-pub-3589546292454760",
-            enable_page_level_ads: true
-        });
-    </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-3589546292454760",
+      enable_page_level_ads: true
+    });
+  </script>
 
-    <script src="advisory-levels.js"></script>
-    <script src="country-codes.js"></script>
-    <link href="styles.css" rel="stylesheet"/>
+  <script src="advisory-levels.js"></script>
+  <script src="country-codes.js"></script>
+  <link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
@@ -39,61 +50,61 @@
         TRAVEL ADVISORY
     </span>
 
-    <div>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" 
-                   href="#" 
-                   id="moreDropdown" 
-                   role="button" 
-                   data-toggle="dropdown" 
-                   aria-haspopup="true" 
-                   aria-expanded="false">
-                    More
-                </a>
-                <div class="dropdown-menu"
-                     aria-labelledby="moreDropdown">
-                    <a class="dropdown-item"
-                       href="#"
-                       data-toggle="modal" 
-                       data-target="#aboutModal">
-                        About
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item"
-                       target="_blank"
-                       href="https://www.jrquick.com">
-                        Find more cool stuff
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </div>
+  <div>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="moreDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+          More
+        </a>
+        <div class="dropdown-menu"
+             aria-labelledby="moreDropdown">
+          <a class="dropdown-item"
+             href="#"
+             data-toggle="modal"
+             data-target="#aboutModal">
+            About
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item"
+             target="_blank"
+             href="https://www.jrquick.com">
+            Find more cool stuff
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
 </nav>
 
 <div>
-    <div id="instructions-container"
-         class="row">
-         <div id="instructions"
-              class="alert alert-success alert-dismissible fade show text-center"
-              role="alert">
-            <strong>Welcome!</strong> Select a country to view travel advice from the U.S. Department of State.
-            <button id="instructions-close"
-                    type="button"
-                    class="close"
-                    data-dismiss="alert"
-                    aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
+  <div id="instructions-container"
+       class="row">
+    <div id="instructions"
+         class="alert alert-success alert-dismissible fade show text-center"
+         role="alert">
+      <strong>Welcome!</strong> Select a country to view travel advice from the U.S. Department of State.
+      <button id="instructions-close"
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-    <div class="row">
-        <div id="world-map"
-             class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
-        <div id="info"
-             class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-        </div>
+  </div>
+  <div class="row">
+    <div id="world-map"
+         class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+    <div id="info"
+         class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
     </div>
+  </div>
 </div>
 
 <div class="modal fade"
@@ -102,263 +113,268 @@
      role="dialog"
      aria-labelledby="aboutModalTitle"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"
-         role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"
-                    id="aboutModalTitle">
-                    About
-                </h5>
-                <button type="button" 
-                        class="close" 
-                        data-dismiss="modal" 
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>About</h5>
-                <p>
-                    This website shows a world map color coded according the the United States Department of Travel - Bureau of Consular Affairs with the intention of making it easier for travels to find safety advice and tips from a trusted source. For more information on a country just find it on the map and click it.
-                </p>
-                <h5>Contact</h5>
-                <p>
-                    If you would like to reach out to me (bug report, ideas, anything else) then shoot an email to me@jrquick.com and I will respond once I can.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary btn-block"
-                        data-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="aboutModalTitle">
+          About
+        </h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>About</h5>
+        <p>
+          This website shows a world map color coded according the the United States Department of Travel - Bureau of
+          Consular Affairs with the intention of making it easier for travels to find safety advice and tips from a
+          trusted source. For more information on a country just find it on the map and click it.
+        </p>
+        <h5>Contact</h5>
+        <p>
+          If you would like to reach out to me (bug report, ideas, anything else) then shoot an email to me@jrquick.com
+          and I will respond once I can.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-primary btn-block"
+                data-dismiss="modal">
+          Close
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    // Request data
-    var chartData = {};
-    var countryCodesData = {};
-    var parsedData = {};
+  // Request data
+  const chartData = {};
+  const parsedData = {};
 
-    // Other
-    var colorScale = {
-        '0': '#DCDCDC',
-        '1': '#143871',
-        '2': '#F7CD76',
-        '3': '#F09D39',
-        '4': '#E93324'
-    };
+  let countryCodesData = {};
 
-    function checkUrl() {
-        var code = window.location.hash;
-        if (code.length !== 0) {
-            code = code.replace('#', '');
+  // Other
+  const colorScale = {
+    '0': '#DCDCDC',
+    '1': '#143871',
+    '2': '#F7CD76',
+    '3': '#F09D39',
+    '4': '#E93324'
+  };
+
+  function checkUrl() {
+    let code = window.location.hash;
+    if (code.length !== 0) {
+      code = code.replace('#', '');
+      showRegion(code);
+    } else {
+      showCountryList();
+    }
+  }
+
+  function getAlphaCode(geoPoliticalArea) {
+    const countryCount = countryCodes.length;
+    for (let i = 0; i < countryCount; i++) {
+      const countryCode = countryCodes[i];
+
+      if (countryCode.geoPoliticalArea === geoPoliticalArea) {
+        return countryCode.alpha2;
+      }
+    }
+
+    return null;
+  }
+
+  function showCountryList() {
+    let html = '<div class="card">' +
+      '  <div class="card-header text-center">Countries</div>' +
+      '  <div class="card-body">';
+
+    const countryCodeCount = countryCodes.length;
+    for (let i = 0; i < countryCodeCount; i++) {
+      const countryCode = countryCodes[i];
+
+      const level = typeof parsedData[countryCode.alpha2] === 'undefined' ? 0 : parsedData[countryCode.alpha2].level;
+
+      const badgeColor = typeof colorScale[level] === 'undefined' ? colorScale[0] : colorScale[level];
+
+      html += '<div class="list-group">' +
+        '  <a href="#' + countryCode.alpha2 + '" ' +
+        '     data-code="' + countryCode.alpha2 + '" ' +
+        '     class="list-element list-group-item d-flex justify-content-between align-items-center">' +
+        countryCode.name +
+        '    <span class="badge badge-pill"' +
+        '          style="color: ' + badgeColor + '">' +
+        level +
+        '    </span>' +
+        '  </a>' +
+        '</div>';
+    }
+
+    html += '</div>';
+    html += '</div>';
+
+
+    $('#info').html(html);
+
+    $('.list-element').click(
+      function () {
+        const code = $(this).data('code');
+
+        showRegion(code);
+      }
+    )
+  }
+
+  function showRegion(code) {
+    code = code.toUpperCase();
+
+    if (typeof parsedData[code] !== 'undefined' && typeof parsedData[code].description !== 'undefined' && parsedData[code].description.length !== 0) {
+      let html = '<a id="show-list-button" class="btn btn-outline-success btn-block">SHOW COUNTRY LIST</a>';
+
+      html += '<div class="card">' +
+        '  <div class="card-header text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</div>' +
+        '  <div class="card-body">' +
+        '    <p class="card-text">' + parsedData[code].description + '</p>' +
+        '    <a href="' + parsedData[code].link + '" ' +
+        '       target="_blank"' +
+        '       class="btn btn-outline-primary btn-block">MORE INFO</a>' +
+        '    <a id="close-info" class="btn btn-outline-danger btn-block">CLOSE</a>' +
+        '  </div>' +
+        '</div>';
+
+      $('#info').html(html);
+
+      window.location.hash = code.toLowerCase();
+
+      $('#close-info').click(
+        function () {
+          showCountryList();
+        }
+      );
+
+      $('#show-list-button').click(
+        function () {
+          showCountryList();
+        }
+      );
+    } else {
+      showCountryList();
+    }
+  }
+
+  $.get({
+    url: 'us-advisory.php',
+    dataType: 'xml',
+    success: function (data) {
+      const items = $(data).find('item');
+
+      const itemCount = items.length;
+      for (let i = 0; i < itemCount; i++) {
+        const item = items[i];
+
+        const geoPoliticalArea = $(item).find('dc\\:identifier').text().trim();
+
+        const code = getAlphaCode(geoPoliticalArea);
+
+        const description = $(item).find('description').text().trim();
+
+        const guide = $(item).find('guide').text().trim();
+
+        const link = $(item).find('link').text().trim();
+
+        const title = $(item).find('title').text().trim();
+
+        const level = title.substring(
+          title.indexOf('Level') + 5,
+          title.indexOf(':')
+        ).trim();
+
+        parsedData[code] = {
+          alpha2: code,
+          description: description,
+          geoPoliticalArea: geoPoliticalArea,
+          guide: guide,
+          level: level,
+          link: link,
+          name: title
+        };
+
+        chartData[code] = level;
+      }
+
+      countryCodesData = countryCodes;
+
+      const countryCount = countryCodes.length;
+      for (let j = 0; j < countryCount; j++) {
+        const countryInfo = countryCodes[j];
+
+        code = countryInfo.alpha2;
+
+        if (typeof chartData[code] === 'undefined') {
+          chartData[code] = '0';
+        }
+
+        if (typeof parsedData[code] === 'undefined') {
+          parsedData[code] = {
+            alpha2: code,
+            geoPoliticalArea: countryInfo.geoPoliticalArea,
+            level: '0',
+            name: countryInfo.name
+          };
+        }
+      }
+
+      $('#world-map').vectorMap(
+        {
+          map: 'world_mill_en',
+          series: {
+            regions: [
+              {
+                scale: colorScale,
+                attribute: 'fill',
+                values: chartData
+              }
+            ]
+          },
+          onRegionTipShow: function (event, label, code) {
+            label.html(
+              (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name)
+            );
+          },
+          onRegionClick: function (event, code) {
             showRegion(code);
-        } else {
-            showCountryList();
+          }
         }
+      );
+
+      // Check URL
+      checkUrl();
+    },
+    error: function () {
+      console.log('Error loading XML data');
     }
-
-    function getAlphaCode(geoPoliticalArea) {
-        var countryCount = countryCodes.length;
-        for (var i = 0; i < countryCount; i++) {
-            var countryCode = countryCodes[i];
-
-            if (countryCode.geoPoliticalArea === geoPoliticalArea) {
-                return countryCode.alpha2;
-            }
-        }
-
-        return null;
-    }
-
-    function showCountryList() {
-        var html = '<div class="card">' +
-                   '  <div class="card-header text-center">Countries</div>' +
-                   '  <div class="card-body">';
-
-        var countryCodeCount = countryCodes.length;
-        for (var i = 0; i < countryCodeCount; i++) {
-            var countryCode = countryCodes[i];
-
-            var level = typeof parsedData[countryCode.alpha2] === 'undefined' ? 0 : parsedData[countryCode.alpha2].level;
-
-            var badgeColor = typeof colorScale[level] === 'undefined' ? colorScale[0] : colorScale[level];
-
-            html += '<div class="list-group">' +
-                '  <a href="#' + countryCode.alpha2 + '" ' +
-                '     data-code="' + countryCode.alpha2 + '" ' +
-                '     class="list-element list-group-item d-flex justify-content-between align-items-center">' +
-                    countryCode.name +
-                '    <span class="badge badge-pill"' +
-                '          style="color: ' + badgeColor + '">' +
-                    level +
-                '    </span>' +
-                '  </a>' +
-                '</div>';
-        }
-
-        html += '</div>';
-        html += '</div>';
-
-
-        $('#info').html(html);
-
-        $('.list-element').click(
-            function() {
-                var code = $(this).data('code');
-
-                showRegion(code);
-            }
-        )
-    }
-
-    function showRegion(code) {
-        code = code.toUpperCase();
-
-        if (typeof parsedData[code] !== 'undefined' && typeof parsedData[code].description !== 'undefined' && parsedData[code].description.length !== 0) {
-            var html = '<a id="show-list-button" class="btn btn-outline-success btn-block">SHOW COUNTRY LIST</a>';
-
-            html += '<div class="card">' +
-                '  <div class="card-header text-center">' + (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name) + '</div>' +
-                '  <div class="card-body">' +
-                '    <p class="card-text">' + parsedData[code].description + '</p>' +
-                '    <a href="' + parsedData[code].link + '" ' +
-                '       target="_blank"' +
-                '       class="btn btn-outline-primary btn-block">MORE INFO</a>' +
-                '    <a id="close-info" class="btn btn-outline-danger btn-block">CLOSE</a>' +
-                '  </div>' +
-                '</div>';
-
-            $('#info').html(html);
-
-            window.location.hash = code.toLowerCase();
-
-            $('#close-info').click(
-                function() {
-                    showCountryList();
-                }
-            );
-
-            $('#show-list-button').click(
-                function() {
-                    showCountryList();
-                }
-            );
-        } else {
-            showCountryList();
-        }
-    }
-
-    $.get({
-        url: 'us-advisory.php',
-        dataType: 'xml',
-        success: function(data) {
-            var items = $(data).find('item');
-
-            var itemCount = items.length;
-            for (var i = 0; i < itemCount; i++) {
-                var item = items[i];
-
-                var geoPoliticalArea = $(item).find('dc\\:identifier').text().trim();
-
-                var code = getAlphaCode(geoPoliticalArea);
-
-                var description = $(item).find('description').text().trim();
-
-                var guide = $(item).find('guide').text().trim();
-
-                var link = $(item).find('link').text().trim();
-
-                var title = $(item).find('title').text().trim();
-
-                var level = title.substring(
-                    title.indexOf('Level') + 5,
-                    title.indexOf(':')
-                ).trim();
-
-                parsedData[code]= {
-                    alpha2:           code,
-                    description:      description,
-                    geoPoliticalArea: geoPoliticalArea,
-                    guide:            guide,
-                    level:            level,
-                    link:             link,
-                    name:             title
-                };
-
-                chartData[code] = level;
-            }
-
-            countryCodesData = countryCodes;
-
-            var countryCount = countryCodes.length;
-            for (var j = 0; j < countryCount; j++) {
-                var countryInfo = countryCodes[j];
-
-                code = countryInfo.alpha2;
-
-                if (typeof chartData[code] === 'undefined') {
-                    chartData[code] = '0';
-                }
-
-                if (typeof parsedData[code] === 'undefined') {
-                    parsedData[code] = {
-                        alpha2:           code,
-                        geoPoliticalArea: countryInfo.geoPoliticalArea,
-                        level:            '0',
-                        name:             countryInfo.name
-                    };
-                }
-            }
-
-            $('#world-map').vectorMap(
-                {
-                    map: 'world_mill_en',
-                    series: {
-                        regions: [
-                            {
-                                scale: colorScale,
-                                attribute: 'fill',
-                                values:    chartData
-                            }
-                        ]
-                    },
-                    onRegionTipShow: function(event, label, code) {
-                        label.html(
-                            (typeof parsedData[code] === 'undefined' ? label.text() : parsedData[code].name)
-                        );
-                    },
-                    onRegionClick: function(event, code) {
-                        showRegion(code);
-                    }
-                }
-            );
-
-            // Check URL
-            checkUrl();
-        },
-        error: function(data){
-            console.log('Error loading XML data');
-        }
-    });
+  });
 
   // Instructions
-  var instructions = $('#instructions');
+  const instructions = $('#instructions');
+
   function closeInstructions() {
     instructions.alert('close');
   }
 
-    setTimeout(
-        function() {
-            closeInstructions();
-        },
-        20*1000
-    );
+  setTimeout(
+    function () {
+      closeInstructions();
+    },
+    20 * 1000
+  );
 
   instructions.click(
     function () {
