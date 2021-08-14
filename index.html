@@ -347,10 +347,11 @@
         }
     });
 
-    // Instructions
-    function closeInstructions() {
-        $('#instructions').alert('close');
-    }
+  // Instructions
+  var instructions = $('#instructions');
+  function closeInstructions() {
+    instructions.alert('close');
+  }
 
     setTimeout(
         function() {
@@ -359,11 +360,11 @@
         20*1000
     );
 
-    $('#instructions').click(
-        function() {
-            closeInstructions();
-        }
-    );
+  instructions.click(
+    function () {
+      closeInstructions();
+    }
+  );
 </script>
 </body>
 </html>
